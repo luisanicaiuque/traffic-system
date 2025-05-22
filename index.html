@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Traffic Contravention System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+   
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex flex-col w-64 bg-white border-r">
+            <div class="flex items-center justify-center h-16 border-b">
+                <h1 class="text-xl font-bold text-gray-800">ATCS Admin</h1>
+            </div>
+            <div class="flex flex-col flex-grow p-4 overflow-auto">
+                <div class="flex flex-col space-y-1">
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 pl-2">Main</div>
+                    <a href="#" class="sidebar-item active flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Contraventions
+                    </a>
+                    <a href="court.html" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        Court Cases
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        Offenders
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Payments
+                    </a>
+                    
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2 pl-2">Modules</div>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Camera Offences
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        Accidents
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                        </svg>
+                        Vehicle Impoundment
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                        Reports
+                    </a>
+                    
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2 pl-2">Administration</div>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        System Settings
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        User Management
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        Audit Logs
+                    </a>
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">JD</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-700">John Doe</p>
+                        <p class="text-xs text-gray-500">System Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white border-b flex items-center justify-between p-4">
+                <div class="flex items-center">
+                    <button class="md:hidden mr-4 text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-semibold text-gray-800">Advanced Traffic Contravention System</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..." class="w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <button class="p-2 rounded-full text-gray-600 hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </button>
+                    <button class="p-2 rounded-full text-gray-600 hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-gray-500 text-sm font-medium">Total Contraventions</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">This Month</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-3xl font-bold text-gray-900">2,547</div>
+                            <div class="ml-3 flex items-center text-green-500 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                <span class="ml-1">12.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-gray-500 text-sm font-medium">Revenue Collected</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">This Month</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-3xl font-bold text-gray-900">R 458,290</div>
+                            <div class="ml-3 flex items-center text-green-500 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                <span class="ml-1">8.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-gray-500 text-sm font-medium">Pending Court Cases</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Current</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-3xl font-bold text-gray-900">342</div>
+                            <div class="ml-3 flex items-center text-red-500 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                <span class="ml-1">4.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-gray-500 text-sm font-medium">Impounded Vehicles</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Current</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-3xl font-bold text-gray-900">78</div>
+                            <div class="ml-3 flex items-center text-green-500 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                                <span class="ml-1">2.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="lg:col-span-2 bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Contravention Statistics</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="chart-container">
+                                <canvas id="contraventionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Top Offence Types</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-700">Speeding</span>
+                                        <span class="text-sm font-medium text-gray-700">42%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-700">Red Light Violation</span>
+                                        <span class="text-sm font-medium text-gray-700">28%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 28%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-700">Illegal Parking</span>
+                                        <span class="text-sm font-medium text-gray-700">15%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-700">Driving Without License</span>
+                                        <span class="text-sm font-medium text-gray-700">8%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 8%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-700">Other Violations</span>
+                                        <span class="text-sm font-medium text-gray-700">7%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 7%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Recent Contraventions</h3>
+                        <div class="flex space-x-2">
+                            <div class="tab active px-4 py-2 cursor-pointer font-medium">All</div>
+                            <div class="tab px-4 py-2 cursor-pointer font-medium">Pending</div>
+                            <div class="tab px-4 py-2 cursor-pointer font-medium">Paid</div>
+                            <div class="tab px-4 py-2 cursor-pointer font-medium">Court</div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offence</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TCV-2023-45678</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CA 123-456</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Speeding (78km/h in 60km/h zone)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R 750.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge pending">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TCV-2023-45677</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CA 789-012</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Red Light Violation</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R 1,500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge paid">Paid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TCV-2023-45676</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CA 345-678</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Driving Without License</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R 2,500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge court">Court</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TCV-2023-45675</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CA 901-234</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Illegal Parking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R 500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge overdue">Overdue</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TCV-2023-45674</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CA 567-890</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Speeding (95km/h in 60km/h zone)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R 1,000.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge paid">Paid</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-6 py-4 border-t">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">42</span> results
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 border rounded text-sm text-gray-600">Previous</button>
+                                <button class="px-3 py-1 border rounded bg-blue-600 text-white text-sm">1</button>
+                                <button class="px-3 py-1 border rounded text-sm text-gray-600">2</button>
+                                <button class="px-3 py-1 border rounded text-sm text-gray-600">3</button>
+                                <button class="px-3 py-1 border rounded text-sm text-gray-600">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Recent Accidents</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">Major Collision - Main Road & 5th Avenue</h4>
+                                        <p class="text-sm text-gray-500">2023-06-15 08:45 AM</p>
+                                        <p class="mt-1 text-sm text-gray-600">Multiple vehicle collision with injuries. Emergency services dispatched.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">Minor Collision - Highway N2, KM 45</h4>
+                                        <p class="text-sm text-gray-500">2023-06-14 17:20 PM</p>
+                                        <p class="mt-1 text-sm text-gray-600">Two-vehicle collision, no injuries reported. Traffic affected in northbound lanes.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">Vehicle Rollover - Central Avenue</h4>
+                                        <p class="text-sm text-gray-500">2023-06-13 22:10 PM</p>
+                                        <p class="mt-1 text-sm text-gray-600">Single vehicle rollover. Driver sustained minor injuries. Suspected DUI.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View all accidents →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Impounded Vehicles</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">Toyota Corolla - CA 123-456</h4>
+                                        <p class="text-sm text-gray-500">Impounded: 2023-06-10</p>
+                                        <p class="mt-1 text-sm text-gray-600">Reason: Multiple unpaid fines (R12,500). Location: Central Pound.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">VW Golf - CA 789-012</h4>
+                                        <p class="text-sm text-gray-500">Impounded: 2023-06-12</p>
+                                        <p class="mt-1 text-sm text-gray-600">Reason: Driving without license. Location: North Pound.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-sm font-medium text-gray-900">Ford Ranger - CA 345-678</h4>
+                                        <p class="text-sm text-gray-500">Impounded: 2023-06-14</p>
+                                        <p class="mt-1 text-sm text-gray-600">Reason: DUI. Location: Central Pound.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View all impounded vehicles →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Modal for Camera Offence Details (Hidden by default) -->
+    <div id="offenceModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-xl font-semibold text-gray-800">Camera Offence Details</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Reference Number</h4>
+                            <p class="text-lg font-semibold">TCV-2023-45678</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Vehicle Details</h4>
+                            <p class="font-medium">CA 123-456</p>
+                            <p class="text-gray-600">Toyota Corolla, White</p>
+                            <p class="text-gray-600">Owner: John Smith</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Offence Details</h4>
+                            <p class="font-medium">Speeding</p>
+                            <p class="text-gray-600">78km/h in 60km/h zone</p>
+                            <p class="text-gray-600">Location: Main Road, Cape Town</p>
+                            <p class="text-gray-600">Date & Time: 2023-06-15 10:23 AM</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Fine Details</h4>
+                            <p class="font-medium">Amount: R 750.00</p>
+                            <p class="text-gray-600">Status: <span class="status-badge pending">Pending</span></p>
+                            <p class="text-gray-600">Due Date: 2023-07-15</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Evidence Image</h4>
+                            <div class="mt-2 border rounded-lg overflow-hidden">
+                                <div class="bg-gray-200 h-64 flex items-center justify-center">
+                                    <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-3 bg-gray-50 text-center">
+                                    <p class="text-sm text-gray-500">Camera ID: CAM-045 | Timestamp: 2023-06-15 10:23:15</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Processing History</h4>
+                            <div class="space-y-3">
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Offence Captured</p>
+                                        <p class="text-xs text-gray-500">2023-06-15 10:23 AM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Verified by Officer</p>
+                                        <p class="text-xs text-gray-500">2023-06-15 02:45 PM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Notice Generated</p>
+                                        <p class="text-xs text-gray-500">2023-06-16 09:10 AM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Print Notice</button>
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Generate Summons</button>
+                    <button class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">Process Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize charts
+            const ctx = document.getElementById('contraventionChart').getContext('2d');
+            const contraventionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Contraventions',
+                            data: [1850, 2100, 1900, 2300, 2200, 2547],
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Revenue (R1000)',
+                            data: [320, 380, 350, 410, 390, 458],
+                            borderColor: 'rgb(16, 185, 129)',
+                            backgroundColor: 'rgba(16, 185, 129, 0.0)',
+                            tension: 0.4,
+                            borderDash: [5, 5]
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Modal functionality
+            const viewLinks = document.querySelectorAll('a[href="#"]');
+            const offenceModal = document.getElementById('offenceModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            viewLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    offenceModal.classList.remove('hidden');
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                offenceModal.classList.add('hidden');
+            });
+            
+            // Close modal when clicking outside
+            offenceModal.addEventListener('click', function(e) {
+                if (e.target === offenceModal) {
+                    offenceModal.classList.add('hidden');
+                }
+            });
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94056859050477d9',t:'MTc0NzM0MTE3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

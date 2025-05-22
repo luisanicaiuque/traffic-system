@@ -1,0 +1,1087 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Traffic Contravention System - Court & Accident Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        
+        .sidebar-item {
+            transition: all 0.2s;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .tab {
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .tab:hover:not(.active) {
+            border-bottom: 3px solid #e5e7eb;
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+        }
+        
+        .status-badge.pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-badge.scheduled {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
+        
+        .status-badge.completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-badge.postponed {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .status-badge.minor {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-badge.serious {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .status-badge.fatal {
+            background-color: #fecaca;
+            color: #7f1d1d;
+        }
+        
+        .form-input {
+            @apply w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+        }
+        
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+        
+        .btn {
+            @apply px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+        }
+        
+        .btn-primary {
+            @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+        }
+        
+        .btn-secondary {
+            @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-blue-500;
+        }
+        
+        .btn-danger {
+            @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex flex-col w-64 bg-white border-r">
+            <div class="flex items-center justify-center h-16 border-b">
+                <h1 class="text-xl font-bold text-gray-800">ATCS Admin</h1>
+            </div>
+            <div class="flex flex-col flex-grow p-4 overflow-auto">
+                <div class="flex flex-col space-y-1">
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 pl-2">Main</div>
+                    <a href="index.html" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Contraventions
+                    </a>
+                    <a href="#" class="sidebar-item active flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        Court Cases
+                    </a>
+                    
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2 pl-2">Modules</div>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Camera Offences
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        Accidents
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center px-2 py-2 text-gray-700 rounded-lg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                        </svg>
+                        Vehicle Impoundment
+                    </a>
+                </div>
+            </div>
+            <div class="p-4 border-t">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">JD</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-700">John Doe</p>
+                        <p class="text-xs text-gray-500">Court Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white border-b flex items-center justify-between p-4">
+                <div class="flex items-center">
+                    <button class="md:hidden mr-4 text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-semibold text-gray-800">Court Documentation & Accident Management</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..." class="w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <button class="p-2 rounded-full text-gray-600 hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4">
+                <!-- Tabs -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="flex border-b">
+                        <button id="courtTab" class="tab active px-6 py-3 text-sm font-medium">Court Documentation</button>
+                        <button id="accidentTab" class="tab px-6 py-3 text-sm font-medium">Accident Management</button>
+                    </div>
+                </div>
+                
+                <!-- Court Documentation Section -->
+                <div id="courtSection" class="space-y-6">
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Court Case Management</h3>
+                            <button class="btn btn-primary flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                New Court Case
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+                                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                                    <label class="form-label">Filter by Status</label>
+                                    <select class="form-input">
+                                        <option value="">All Statuses</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="scheduled">Scheduled</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="postponed">Postponed</option>
+                                    </select>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                                    <label class="form-label">Filter by Court</label>
+                                    <select class="form-input">
+                                        <option value="">All Courts</option>
+                                        <option value="central">Central Magistrate Court</option>
+                                        <option value="north">Northern District Court</option>
+                                        <option value="east">Eastern District Court</option>
+                                    </select>
+                                </div>
+                                <div class="w-full md:w-1/3">
+                                    <label class="form-label">Date Range</label>
+                                    <input type="date" class="form-input">
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Case Number</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offender</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offence</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Court Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CC-2023-1234</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">James Smith</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Driving Under Influence</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-15</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge scheduled">Scheduled</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openCourtCaseModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CC-2023-1233</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah Johnson</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multiple Unpaid Fines</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-10</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge pending">Pending</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openCourtCaseModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CC-2023-1232</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Michael Brown</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Reckless Driving</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-28</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge completed">Completed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openCourtCaseModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CC-2023-1231</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Emily Davis</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Driving Without License</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-25</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge postponed">Postponed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openCourtCaseModal()">View</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-6 flex justify-between items-center">
+                                <div class="text-sm text-gray-500">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">24</span> results
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">Previous</button>
+                                    <button class="px-3 py-1 border rounded bg-blue-600 text-white text-sm">1</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">2</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">3</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-6 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">Summons Management</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-6">
+                                    <div class="flex justify-between mb-4">
+                                        <h4 class="text-sm font-medium text-gray-700">Summons Statistics</h4>
+                                        <span class="text-xs text-gray-500">Last 30 days</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-blue-50 p-4 rounded-lg">
+                                            <div class="text-sm text-blue-600 font-medium">Generated</div>
+                                            <div class="text-2xl font-bold text-blue-800">156</div>
+                                        </div>
+                                        <div class="bg-green-50 p-4 rounded-lg">
+                                            <div class="text-sm text-green-600 font-medium">Served</div>
+                                            <div class="text-2xl font-bold text-green-800">124</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900">Recent Summons</h4>
+                                            <p class="text-xs text-gray-500">Section 54 of Criminal Procedures Act</p>
+                                        </div>
+                                        <button class="btn btn-secondary text-xs">Generate New</button>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">S-2023-0458</div>
+                                                <div class="text-xs text-gray-500">2023-06-18</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">James Smith - Driving Under Influence</div>
+                                        </div>
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">S-2023-0457</div>
+                                                <div class="text-xs text-gray-500">2023-06-17</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">Sarah Johnson - Multiple Unpaid Fines</div>
+                                        </div>
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">S-2023-0456</div>
+                                                <div class="text-xs text-gray-500">2023-06-16</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">Michael Brown - Reckless Driving</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-6 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">Court Registers</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <div class="bg-indigo-50 p-4 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <div class="text-sm font-medium text-indigo-800">Criminal Case Register</div>
+                                                <div class="text-xs text-indigo-600">42 active cases</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-purple-50 p-4 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-500">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <div class="text-sm font-medium text-purple-800">Admission of Guilt Register</div>
+                                                <div class="text-xs text-purple-600">128 entries this month</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-sm font-medium text-gray-900">Register Activities</h4>
+                                        <button class="btn btn-secondary text-xs">Export Data</button>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">Warrant of Arrest Issued</div>
+                                                <div class="text-xs text-gray-500">Today, 10:23 AM</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">For: Emily Davis - Case #CC-2023-1231</div>
+                                        </div>
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">Admission of Guilt Recorded</div>
+                                                <div class="text-xs text-gray-500">Today, 09:15 AM</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">For: Michael Brown - Fine: R1,500.00</div>
+                                        </div>
+                                        <div class="border rounded-lg p-3 hover:bg-gray-50">
+                                            <div class="flex justify-between">
+                                                <div class="text-sm font-medium">Spot Fine Register Updated</div>
+                                                <div class="text-xs text-gray-500">Yesterday, 16:45 PM</div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">12 new entries added by Officer J. Wilson</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Document Templates</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Section 341 Notice</h4>
+                                            <p class="text-xs text-gray-500">Camera Offence Notice</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Preview</button>
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Generate</button>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Section 54 Summons</h4>
+                                            <p class="text-xs text-gray-500">Court Appearance Summons</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Preview</button>
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Generate</button>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Warrant of Arrest</h4>
+                                            <p class="text-xs text-gray-500">For Non-Appearance</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Preview</button>
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accident Management Section (Hidden by default) -->
+                <div id="accidentSection" class="space-y-6 hidden">
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Accident Records</h3>
+                            <button class="btn btn-primary flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Record New Accident
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+                                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                                    <label class="form-label">Filter by Severity</label>
+                                    <select class="form-input">
+                                        <option value="">All Severities</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="serious">Serious</option>
+                                        <option value="fatal">Fatal</option>
+                                    </select>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                                    <label class="form-label">Filter by Location</label>
+                                    <select class="form-input">
+                                        <option value="">All Locations</option>
+                                        <option value="highway">Highway</option>
+                                        <option value="urban">Urban Roads</option>
+                                        <option value="rural">Rural Roads</option>
+                                    </select>
+                                </div>
+                                <div class="w-full md:w-1/3">
+                                    <label class="form-label">Date Range</label>
+                                    <input type="date" class="form-input">
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accident ID</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicles Involved</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
+                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ACC-2023-0045</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Main Road & 5th Avenue</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-15 08:45 AM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge serious">Serious</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openAccidentModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ACC-2023-0044</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Highway N2, KM 45</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-14 17:20 PM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge minor">Minor</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openAccidentModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ACC-2023-0043</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Central Avenue</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-13 22:10 PM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge minor">Minor</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openAccidentModal()">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ACC-2023-0042</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rural Road R44, KM 12</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-12 06:30 AM</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="status-badge fatal">Fatal</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-blue-600 hover:text-blue-900" onclick="openAccidentModal()">View</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-6 flex justify-between items-center">
+                                <div class="text-sm text-gray-500">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">32</span> results
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">Previous</button>
+                                    <button class="px-3 py-1 border rounded bg-blue-600 text-white text-sm">1</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">2</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">3</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-gray-600">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-6 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">Accident Statistics</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-6">
+                                    <div class="flex justify-between mb-4">
+                                        <h4 class="text-sm font-medium text-gray-700">Accident Trends</h4>
+                                        <select class="text-xs border rounded p-1">
+                                            <option>Last 30 days</option>
+                                            <option>Last 90 days</option>
+                                            <option>Last 12 months</option>
+                                        </select>
+                                    </div>
+                                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                        <div class="text-gray-400">Accident Trend Chart</div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="bg-blue-50 p-4 rounded-lg">
+                                        <div class="text-sm text-blue-600 font-medium">Minor</div>
+                                        <div class="text-2xl font-bold text-blue-800">24</div>
+                                    </div>
+                                    <div class="bg-yellow-50 p-4 rounded-lg">
+                                        <div class="text-sm text-yellow-600 font-medium">Serious</div>
+                                        <div class="text-2xl font-bold text-yellow-800">7</div>
+                                    </div>
+                                    <div class="bg-red-50 p-4 rounded-lg">
+                                        <div class="text-sm text-red-600 font-medium">Fatal</div>
+                                        <div class="text-2xl font-bold text-red-800">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-6 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">Accident Hotspots</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-6 h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <div class="text-gray-400">Accident Hotspot Map</div>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between border-b pb-2">
+                                        <div>
+                                            <div class="text-sm font-medium">Main Road & 5th Avenue</div>
+                                            <div class="text-xs text-gray-500">8 accidents in last 90 days</div>
+                                        </div>
+                                        <div class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">High Risk</div>
+                                    </div>
+                                    <div class="flex items-center justify-between border-b pb-2">
+                                        <div>
+                                            <div class="text-sm font-medium">Highway N2, KM 45-48</div>
+                                            <div class="text-xs text-gray-500">6 accidents in last 90 days</div>
+                                        </div>
+                                        <div class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Medium Risk</div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-sm font-medium">Central Avenue & Park Street</div>
+                                            <div class="text-xs text-gray-500">5 accidents in last 90 days</div>
+                                        </div>
+                                        <div class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Medium Risk</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">Accident Reporting Tools</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Accident Report Form</h4>
+                                            <p class="text-xs text-gray-500">Standard AR Form</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Preview</button>
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Generate</button>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Scene Documentation</h4>
+                                            <p class="text-xs text-gray-500">Photo & Evidence Tool</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Open Tool</button>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex items-center mb-3">
+                                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        <div class="ml-3">
+                                            <h4 class="text-sm font-medium">Statistical Reports</h4>
+                                            <p class="text-xs text-gray-500">Analysis & Trends</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <button class="text-xs text-blue-600 hover:text-blue-800">Generate Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Court Case Modal -->
+    <div id="courtCaseModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-xl font-semibold text-gray-800">Court Case Details</h3>
+                <button onclick="closeCourtCaseModal()" class="text-gray-400 hover:text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Case Number</h4>
+                            <p class="text-lg font-semibold">CC-2023-1234</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Offender Details</h4>
+                            <p class="font-medium">James Smith</p>
+                            <p class="text-gray-600">ID: 7812125042082</p>
+                            <p class="text-gray-600">Address: 123 Main Street, Cape Town</p>
+                            <p class="text-gray-600">Contact: 082 123 4567</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Offence Details</h4>
+                            <p class="font-medium">Driving Under Influence</p>
+                            <p class="text-gray-600">Date: 2023-06-10</p>
+                            <p class="text-gray-600">Location: Main Road, Cape Town</p>
+                            <p class="text-gray-600">Officer: Sgt. J. Williams (Badge #45892)</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Vehicle Details</h4>
+                            <p class="font-medium">Toyota Corolla (2018)</p>
+                            <p class="text-gray-600">Registration: CA 123-456</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Court Details</h4>
+                            <p class="font-medium">Central Magistrate Court</p>
+                            <p class="text-gray-600">Court Date: 2023-07-15, 09:00 AM</p>
+                            <p class="text-gray-600">Court Room: 4B</p>
+                            <p class="text-gray-600">Prosecutor: A. Johnson</p>
+                            <p class="text-gray-600">Status: <span class="status-badge scheduled">Scheduled</span></p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Case History</h4>
+                            <div class="space-y-3">
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Offence Recorded</p>
+                                        <p class="text-xs text-gray-500">2023-06-10 23:15 PM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Summons Generated</p>
+                                        <p class="text-xs text-gray-500">2023-06-12 10:30 AM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Summons Served</p>
+                                        <p class="text-xs text-gray-500">2023-06-15 14:45 PM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Court Date Scheduled</p>
+                                        <p class="text-xs text-gray-500">2023-06-18 09:20 AM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Related Documents</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between border-b pb-2">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="ml-2 text-sm">Summons (S-2023-0458)</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600">View</button>
+                                </div>
+                                <div class="flex items-center justify-between border-b pb-2">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="ml-2 text-sm">Police Report</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600">View</button>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="ml-2 text-sm">Breathalyzer Test Results</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button class="btn btn-secondary">Print Case File</button>
+                    <button class="btn btn-secondary">Update Status</button>
+                    <button class="btn btn-primary">Generate Court Roll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Accident Modal -->
+    <div id="accidentModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-xl font-semibold text-gray-800">Accident Record Details</h3>
+                <button onclick="closeAccidentModal()" class="text-gray-400 hover:text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Accident ID</h4>
+                            <p class="text-lg font-semibold">ACC-2023-0045</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Location Details</h4>
+                            <p class="font-medium">Main Road & 5th Avenue</p>
+                            <p class="text-gray-600">GPS: -33.925, 18.423</p>
+                            <p class="text-gray-600">Area: Central Business District</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Date & Time</h4>
+                            <p class="font-medium">2023-06-15 08:45 AM</p>
+                            <p class="text-gray-600">Day of Week: Thursday</p>
+                            <p class="text-gray-600">Weather: Clear</p>
+                            <p class="text-gray-600">Road Conditions: Dry</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Severity</h4>
+                            <p><span class="status-badge serious">Serious</span></p>
+                            <p class="text-gray-600 mt-2">Injuries: 2 serious, 1 minor</p>
+                            <p class="text-gray-600">Fatalities: 0</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Vehicles Involved</h4>
+                            <div class="space-y-3 mt-2">
+                                <div class="border rounded-lg p-3">
+                                    <p class="text-sm font-medium">Vehicle 1: Toyota Corolla</p>
+                                    <p class="text-xs text-gray-600">Registration: CA 123-456</p>
+                                    <p class="text-xs text-gray-600">Driver: James Smith (License: EC12345678)</p>
+                                </div>
+                                <div class="border rounded-lg p-3">
+                                    <p class="text-sm font-medium">Vehicle 2: VW Golf</p>
+                                    <p class="text-xs text-gray-600">Registration: CA 789-012</p>
+                                    <p class="text-xs text-gray-600">Driver: Sarah Johnson (License: EC87654321)</p>
+                                </div>
+                                <div class="border rounded-lg p-3">
+                                    <p class="text-sm font-medium">Vehicle 3: Ford Ranger</p>
+                                    <p class="text-xs text-gray-600">Registration: CA 345-678</p>
+                                    <p class="text-xs text-gray-600">Driver: Michael Brown (License: EC13579246)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Accident Description</h4>
+                            <p class="text-sm text-gray-600">
+                                Multiple vehicle collision at intersection. Vehicle 1 failed to stop at red light and collided with Vehicle 2, which was proceeding through intersection on green light. Vehicle 3 was unable to stop in time and collided with Vehicle 2. Two occupants of Vehicle 2 sustained serious injuries and were transported to City Hospital.
+                            </p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Reporting Officer</h4>
+                            <p class="font-medium">Officer J. Wilson (Badge #34567)</p>
+                            <p class="text-gray-600">Central Traffic Department</p>
+                            <p class="text-gray-600">Report Filed: 2023-06-15 10:30 AM</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Related Documents</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between border-b pb-2">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="ml-2 text-sm">Scene Photos (12)</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600">View</button>
+                                </div>
+                                <div class="flex items-center justify-between border-b pb-2">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="ml-2 text-sm">Accident Report Form</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600">View</button>
+                                </div>
+                <!--  <!-- Modal for Camera Offence Details (Hidden by default) 
+    <div id="offenceModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-xl font-semibold text-gray-800">Camera Offence Details</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Reference Number</h4>
+                            <p class="text-lg font-semibold">TCV-2023-45678</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Vehicle Details</h4>
+                            <p class="font-medium">CA 123-456</p>
+                            <p class="text-gray-600">Toyota Corolla, White</p>
+                            <p class="text-gray-600">Owner: John Smith</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Offence Details</h4>
+                            <p class="font-medium">Speeding</p>
+                            <p class="text-gray-600">78km/h in 60km/h zone</p>
+                            <p class="text-gray-600">Location: Main Road, Cape Town</p>
+                            <p class="text-gray-600">Date & Time: 2023-06-15 10:23 AM</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Fine Details</h4>
+                            <p class="font-medium">Amount: R 750.00</p>
+                            <p class="text-gray-600">Status: <span class="status-badge pending">Pending</span></p>
+                            <p class="text-gray-600">Due Date: 2023-07-15</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Evidence Image</h4>
+                            <div class="mt-2 border rounded-lg overflow-hidden">
+                                <div class="bg-gray-200 h-64 flex items-center justify-center">
+                                    <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-3 bg-gray-50 text-center">
+                                    <p class="text-sm text-gray-500">Camera ID: CAM-045 | Timestamp: 2023-06-15 10:23:15</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-sm font-medium text-gray-500 mb-2">Processing History</h4>
+                            <div class="space-y-3">
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Offence Captured</p>
+                                        <p class="text-xs text-gray-500">2023-06-15 10:23 AM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Verified by Officer</p>
+                                        <p class="text-xs text-gray-500">2023-06-15 02:45 PM</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">Notice Generated</p>
+                                        <p class="text-xs text-gray-500">2023-06-16 09:10 AM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Print Notice</button>
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Generate Summons</button>
+                    <button class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">Process Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+                               <!-- <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94056970c2de77d9',t:'MTc0NzM0MTIyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>-->
+                    </div>
+                </div>
